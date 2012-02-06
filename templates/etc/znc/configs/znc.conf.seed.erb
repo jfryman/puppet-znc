@@ -1,0 +1,25 @@
+<User <%= name %>>
+        Pass       = changeme
+        Nick       = <%= name %>
+        AltNick    = <%= name %>_
+        Ident      = <%= name %>
+        RealName   = <%= name %>
+        QuitMsg = ZNC - http://znc.sourceforge.net
+        ChanModes  = +stn
+        Buffer     = 50
+        KeepBuffer = true
+        MultiClients = true
+        BounceDCCs = true
+        DenyLoadMod = false
+        Admin = <%= admin %>
+        DenySetVHost = false
+        DCCLookupMethod = default
+        TimestampFormat = [%H:%M:%S]
+        AppendTimestamp = false
+        PrependTimestamp = true
+        TimezoneOffset = 0.00
+        JoinTries = 10
+        MaxJoins = 5
+        IRCConnectEnabled = true
+        Server     = localhost.localdomain 6667
+</User>

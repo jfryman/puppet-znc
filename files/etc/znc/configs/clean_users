@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+ZNC_CONFIG_BASEDIR=/etc/znc/configs
+ACTIVE_USERS=`ls -F ${ZNC_CONFIG_BASEDIR}/users/* | xargs -n1 basename`
+DEFINED_USERS=`grep \<User ${ZNC_CONFIG_BASEDIR}/znc.conf | awk '{print $2}' | sed 's/\(.*\)./\1/'`
+
+for d in ${DEFINED_USERS}
+do
+  if [[ ${ACTIVE_USERS[*]} =~ ${d} ]]
+    then
+      continue
+    else
+      sed -i "/<User ${d}>/,/<\/User>/ d" ${ZNC_CONFIG_BASEDIR}/znc.conf 
+  fi
+done
