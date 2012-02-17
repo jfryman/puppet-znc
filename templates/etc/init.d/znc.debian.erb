@@ -111,7 +111,7 @@ case "$1" in
 	esac
   ;;
   status)
-    if ! (ps ax | grep -v grep | grep znc); then
+  if ! (ps ax | grep -v grep | grep /usr/bin/znc > /dev/null); then
       log_daemon_msg "ZNC is not running"
       exit 1
     else
