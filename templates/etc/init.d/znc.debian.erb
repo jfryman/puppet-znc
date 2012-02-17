@@ -109,7 +109,16 @@ case "$1" in
 		0|1) [ "$VERBOSE" != no ] && log_end_msg 0 ;;
 		2) [ "$VERBOSE" != no ] && log_end_msg 1 ;;
 	esac
-	;;
+  ;;
+  status)
+    if ! (ps ax | grep -v grep | grep znc); then
+      log_daemon_msg "ZNC is not running"
+      exit 1
+    else
+      log_daemon_msg "ZNC is running"
+      exit 0
+    fi
+  ;;
   #reload|force-reload)
 	#
 	# If do_reload() is not implemented then leave this commented out
