@@ -16,22 +16,11 @@ PATH=/sbin:/usr/sbin:/bin:/usr/bin
 DESC="znc, an advanced modular IRC bouncer"
 NAME=znc
 DAEMON=/usr/bin/$NAME
-DAEMON_ARGS="-d /etc/znc"
+DAEMON_ARGS="-d <%= scope.lookupvar('znc::params::zc_config_dir') %>"
 PIDFILE=/var/run/$NAME.pid
 SCRIPTNAME=/etc/init.d/$NAME
-USER=znc
-GROUP=znc
-
-if [ ! -f /etc/znc/configs/znc.conf ];then
-    if [ -f /etc/znc/configs/znc.conf.seed ];then
-        cp /etc/znc/configs/znc.conf.seed /etc/znc/configs/znc.conf
-        chown znc:znc /etc/znc/configs/znc.conf
-        chmod 640 /etc/znc/configs/znc.conf
-    else 
-        echo "could not seed the initial config file"
-        exit 2
-    fi
-fi
+USER=<%= scope.lookupvar('znc::params::zc_user') %>
+GROUP=<%= scope.lookupvar('znc::params::zc_group') %>
 
 # Exit if the package is not installed
 [ -x "$DAEMON" ] || exit 0

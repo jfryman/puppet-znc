@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-ZNC_CONFIG_BASEDIR=/etc/znc/configs
+ZNC_CONFIG_BASEDIR=<%= scope.lookupvar('znc::params::zc_config_dir') %>
 ACTIVE_USERS=`ls -F ${ZNC_CONFIG_BASEDIR}/users/* | xargs -n1 basename`
 DEFINED_USERS=`grep \<User ${ZNC_CONFIG_BASEDIR}/znc.conf | awk '{print $2}' | sed 's/\(.*\)./\1/'`
 
@@ -9,6 +9,6 @@ do
     then
       continue
     else
-      sed -i "/<User ${d}>/,/<\/User>/ d" ${ZNC_CONFIG_BASEDIR}/znc.conf 
+      sed -i "/<User ${d}>/,/<\/User>/ d" ${ZNC_CONFIG_BASEDIR}/znc.conf
   fi
 done
