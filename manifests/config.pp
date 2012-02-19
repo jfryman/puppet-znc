@@ -117,7 +117,7 @@ class znc::config(
       creates => '/etc/znc/znc.pem',
     }
   }
-  
+
   # Bootstrap config files
   exec { 'initialize-znc-config':
     command => 'cat /etc/znc/configs/znc.conf.header > /etc/znc/configs/znc.conf',
@@ -129,6 +129,4 @@ class znc::config(
      refreshonly => 'true',
      require     => File['/etc/znc/configs/clean_users'],
   }
-  znc::user { $znc::params::znc_admins: admin => 'true', }
-  znc::user { $znc::params::znc_users: }
 }
