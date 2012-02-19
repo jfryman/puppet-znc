@@ -11,7 +11,7 @@
 exec=/usr/bin/znc
 prog=znc
 config=/etc/znc
-runas=znc
+runas=<%= scope.lookupvar('znc::params::zc_user') %>
 
 lockfile=/var/lock/subsys/$prog
 
