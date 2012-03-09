@@ -2,7 +2,7 @@
 
 James Fryman <james@frymanet.com>
 
-This module manages ZNC from within Puppet.
+This module manages ZNC from within Puppet
 
 # Quick Start
 
