@@ -1,10 +1,10 @@
 AnonIPLimit  = 10
-Listener4    = <% if ssl == 'true' -%>+<% end -%><%= port %>
+Listener4    = <% if @ssl == 'true' -%>+<% end -%><%= @port %>
 ConnectDelay = 5
 ServerThrottle = 30
 Skin         = dark-clouds
 StatusPrefix = *
-<% if auth_type == 'sasl' -%>
+<% if @auth_type == 'sasl' -%>
 LoadModule   = saslauth saslauthd
 <% end -%>
 LoadModule   = webadmin
