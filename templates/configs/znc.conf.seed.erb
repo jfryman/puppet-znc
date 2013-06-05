@@ -1,9 +1,9 @@
-<User <%= name %>>
+<User <%= @name %>>
         Pass       = changeme
-        Nick       = <%= name %>
-        AltNick    = <%= name %>_
-        Ident      = <%= name %>
-        RealName   = <%= name %>
+        Nick       = <%= @name %>
+        AltNick    = <%= @name %>_
+        Ident      = <%= @name %>
+        RealName   = <%= @name %>
         QuitMsg = ZNC - http://znc.sourceforge.net
         ChanModes  = +stn
         Buffer     = 50
@@ -11,7 +11,7 @@
         MultiClients = true
         BounceDCCs = true
         DenyLoadMod = false
-        Admin = <%= admin %>
+        Admin = <%= @admin %>
         DenySetVHost = false
         DCCLookupMethod = default
         TimestampFormat = [%H:%M:%S]

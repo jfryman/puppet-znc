@@ -59,12 +59,12 @@ commonName_max              = 64
 # Default values for the above, for consistency and less typing.
 # Variable name				Value
 #------------------------	  ------------------------------
-0.organizationName_default    = <%= organizationName %>
-localityName_default          = <%= localityName %>
-stateOrProvinceName_default   = <%= stateOrProvinceName %>
-countryName_default           = <%= countryName %>
-emailAddress_default          = <%= emailAddress %>
-commonName_default            = <%= commonName %>
+0.organizationName_default    = <%= @organizationName %>
+localityName_default          = <%= @localityName %>
+stateOrProvinceName_default   = <%= @stateOrProvinceName %>
+countryName_default           = <%= @countryName %>
+emailAddress_default          = <%= @emailAddress %>
+commonName_default            = <%= @commonName %>
  
 [ v3_ca ]
 basicConstraints			        = CA:TRUE
