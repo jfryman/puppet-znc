@@ -39,7 +39,7 @@ class znc::config(
   File {
     owner => $znc::params::zc_user,
     group => $znc::params::zc_group,
-    mode  => '0644',
+    mode  => '0600',
   }
   Exec {
     path => '/bin:/sbin:/usr/bin:/usr/sbin'
