@@ -1,13 +1,13 @@
 <User <%= @name %>>
-        Pass       = changeme
         Nick       = <%= @name %>
         AltNick    = <%= @name %>_
         Ident      = <%= @name %>
         RealName   = <%= @name %>
-        QuitMsg = ZNC - http://znc.sourceforge.net
+        Pass = <%= @pass %>
+        QuitMsg = '<%= @quitmsg %>'
         ChanModes  = +stn
-        Buffer     = 50
-        KeepBuffer = true
+        Buffer     = <%= @buffer %>
+        KeepBuffer = <%= @keepbuffer %>
         MultiClients = true
         BounceDCCs = true
         DenyLoadMod = false
@@ -21,5 +21,6 @@
         JoinTries = 10
         MaxJoins = 5
         IRCConnectEnabled = true
-        Server     = localhost.localdomain 6667
+        Server     = <%= @server %> <% if @ssl == 'true' -%>+<% end -%><%= @port %>
+
 </User>
