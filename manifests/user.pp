@@ -21,7 +21,14 @@
 # This class file is not called directly
 define znc::user(
   $ensure = 'present',
-  $admin  = 'false'
+  $admin  = 'false',
+  $buffer = 500,
+  $keepbuffer = 'false',
+  $server = 'irc.freenode.net',
+  $port = 6667,
+  $ssl = 'false',
+  $quitmsg = 'puppet <3',
+  $pass = ''
 ) {
   include znc::params
 
