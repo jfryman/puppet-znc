@@ -7,7 +7,8 @@
 #
 # Parameters:
 #   $auth_type: (plain|sasl). Will determine to use local auth or SASL auth.
-#   $ssl: (true|false). To enable or disable SSL support. Will autogen a SSL certificate.
+#   $ssl: (true|false). Will autogen a SSL certificate.
+#   $ssl_source: puppet:///path/to/server.pem
 #   $port: port to run ZNC on.
 #   $organizationName: Org Name for SSL Self Signed Cert
 #   $localityName: City for SSL Self Signed Cert
@@ -36,6 +37,7 @@
 #  }
 class znc(
   $auth_type           = $znc::params::zc_auth_type,
+  $ssl_source          = undef,
   $ssl                 = $znc::params::zc_ssl,
   $organizationName    = undef,
   $localityName        = undef,
@@ -67,6 +69,7 @@ class znc(
   -> class { 'znc::config': 
        auth_type           => $auth_type,
        ssl                 => $ssl,
+       ssl_source          => $ssl_source,
        organizationName    => $organizationName,
        localityName        => $localityName,
        stateOrProvinceName => $stateOrProvinceName,
