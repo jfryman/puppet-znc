@@ -28,6 +28,7 @@
 class znc::config(
   $auth_type,
   $ssl,
+  $ssl_source,
   $organizationName,
   $localityName,
   $stateOrProvinceName,
@@ -115,6 +116,14 @@ class znc::config(
     exec { 'create-self-signed-znc-ssl':
       command => "${znc::params::zc_config_dir}/bin/generate_znc_ssl",
       creates => "${znc::params::zc_config_dir}/znc.pem",
+    }
+  }
+  
+  if $ssl_source {
+    file { "${znc::params::zc_config_dir}/znc.pem":
+      ensure => file,
+      mode   => '0600',
+      source => $ssl_source,
     }
   }
 
