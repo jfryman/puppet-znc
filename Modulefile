@@ -1,0 +1,10 @@
+name    'jfryman-znc'
+version '0.0.1'
+source 'http://github.com/jfryman/puppet-znc'
+author 'James Fryman'
+license 'Apache License Version 2.0'
+summary 'Puppet ZNC server management module'
+description 'This module can be used for basic ZNC Management'
+project_page 'http://github.com/jfryman/puppet-znc'
+
+dependency 'puppetlabs/stdlib', '>= 0.1.6'
