@@ -26,16 +26,16 @@
 # Sample Usage:
 #  This module should not be called directly.
 class znc::config(
-  $auth_type,
-  $ssl,
-  $ssl_source,
-  $organizationName,
-  $localityName,
-  $stateOrProvinceName,
-  $countryName,
-  $emailAddress,
-  $commonName,
-  $port
+  $auth_type            = undef,
+  $ssl                  = undef,
+  $ssl_source           = undef,
+  $organizationName     = undef,
+  $localityName         = undef,
+  $stateOrProvinceName  = undef,
+  $countryName          = undef,
+  $emailAddress         = undef,
+  $commonName           = undef,
+  $port,
 ) {
   File {
     owner => $znc::params::zc_user,
