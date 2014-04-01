@@ -53,14 +53,17 @@ class znc(
 
   # Make sure that all of the SSL parameters are filled out.
   if ($ssl == 'true') and 
-    ($organizationName == undef or
-     $localityName == undef or 
-     $stateOrProvinceName == undef or 
-     $countryName == undef or 
-     $emailAddress == undef or 
-     $commonName == undef) 
+       ($ssl_source or
+         ($organizationName == undef or
+          $localityName == undef or 
+          $stateOrProvinceName == undef or 
+          $countryName == undef or 
+          $emailAddress == undef or 
+          $commonName == undef
+        )
+      )
   {
-    fail("Missing Parameters to generate an SSL Certificate")   
+    fail("Missing Parameters to use an SSL Certificate")   
   }
 
   ### Begin Flow Logic ###
