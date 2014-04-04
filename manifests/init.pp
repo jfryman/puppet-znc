@@ -53,7 +53,7 @@ class znc(
 
   # Make sure that all of the SSL parameters are filled out.
   if ($ssl == 'true') and 
-       ($ssl_source or
+       ($ssl_source == undef or
          ($organizationName == undef or
           $localityName == undef or 
           $stateOrProvinceName == undef or 
