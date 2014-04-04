@@ -28,7 +28,8 @@ define znc::user(
   $port = 6667,
   $ssl = 'false',
   $quitmsg = 'puppet <3',
-  $pass = ''
+  $pass = '',
+  $default_channel = undef,
 ) {
   include znc::params
 
