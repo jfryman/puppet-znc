@@ -22,5 +22,11 @@
         MaxJoins = 5
         IRCConnectEnabled = true
         Server     = <%= @server %> <% if @ssl == 'true' -%>+<% end -%><%= @port %>
+        
+        <%- if @default_channel -%>
+        <Chan <%= @default_channel %>
+        Modes = +stn
+        </Chan>
+        <%- end -%>
 
 </User>
