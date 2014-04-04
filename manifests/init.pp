@@ -49,23 +49,6 @@ class znc(
 ) inherits znc::params {
   include stdlib
 
-  if $auth_type == 'sasl' { include saslauthd }
-
-  # Make sure that all of the SSL parameters are filled out.
-  if ($ssl == 'true') and 
-       ($ssl_source == undef or
-         ($organizationName == undef or
-          $localityName == undef or 
-          $stateOrProvinceName == undef or 
-          $countryName == undef or 
-          $emailAddress == undef or 
-          $commonName == undef
-        )
-      )
-  {
-    fail("Missing Parameters to use an SSL Certificate")   
-  }
-
   ### Begin Flow Logic ###
   anchor { 'znc::begin': }
   -> class { 'znc::package': }
