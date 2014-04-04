@@ -94,7 +94,7 @@ class znc::config(
   }
 
   # Bootstrap SSL
-  if $ssl == 'true' {
+  if $ssl == 'true' and !$ssl_source {
     file { "${znc::params::zc_config_dir}/ssl":
       ensure => directory,
       mode   => '0600',
