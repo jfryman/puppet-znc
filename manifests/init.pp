@@ -16,7 +16,7 @@
 #   $countryName: Country for SSL Self Signed Cert
 #   $emailAddress: Admin email for SSL Self Signed Cert
 #   $commonName: Common Name for SSL Self Signed Cert
-#   
+#
 # Actions:
 #   This module will install the ZNC and prep it to connect
 #   to a local IRC server. Per-user settings can be reconfigured.
@@ -24,10 +24,10 @@
 # Requires:
 #  - An IRC server to connect to.
 #  - Class[stdlib]. This is Puppet Labs standard library to include additional methods for use within Puppet. [https://github.com/puppetlabs/puppetlabs-stdlib]
-# 
+#
 # Sample Usage:
-#  class { 'znc': 
-#    ssl                 => 'true', 
+#  class { 'znc':
+#    ssl                 => 'true',
 #    organizationName    => 'Fryman and Associates, Inc',
 #    localityName        => 'Nashville',
 #    stateOrProvinceName => 'TN',
@@ -52,18 +52,18 @@ class znc(
   ### Begin Flow Logic ###
   anchor { 'znc::begin': }
   -> class { 'znc::package': }
-  -> class { 'znc::config': 
-       auth_type           => $auth_type,
-       ssl                 => $ssl,
-       ssl_source          => $ssl_source,
-       organizationName    => $organizationName,
-       localityName        => $localityName,
-       stateOrProvinceName => $stateOrProvinceName,
-       countryName         => $countryName,
-       emailAddress        => $emailAddress,
-       commonName          => $commonName,
-       port                => $port,
-     }
+  -> class { 'znc::config':
+      auth_type           => $auth_type,
+      ssl                 => $ssl,
+      ssl_source          => $ssl_source,
+      organizationName    => $organizationName,
+      localityName        => $localityName,
+      stateOrProvinceName => $stateOrProvinceName,
+      countryName         => $countryName,
+      emailAddress        => $emailAddress,
+      commonName          => $commonName,
+      port                => $port,
+    }
   ~> class { 'znc::service': }
   -> anchor { 'znc::end': }
 }

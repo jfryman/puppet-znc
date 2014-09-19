@@ -1,8 +1,8 @@
 # Class: znc::params
 #
 # Description
-#   This class is designed to carry default parameters for 
-#   Class: znc.  
+#   This class is designed to carry default parameters for
+#   Class: znc.
 #
 # Parameters:
 #   $zc_suffix   - The suffix for the init.d script for ZNC located in files/etc/init.d/
@@ -11,7 +11,7 @@
 #   $zc_ssl - Default SSL status if not configured
 #   $zc_port - Default port if not configured
 #   $znc_admins - list of users that have admin priveleges in ZNC
-#   $znc_users - list of znc users. 
+#   $znc_users - list of znc users.
 #
 # Actions:
 #   This module does not perform any actions.
@@ -29,7 +29,7 @@ class znc::params {
     }
     ubuntu, debian: {
       $zc_suffix = 'debian'
-      $zc_packages = [ 'znc', 'znc-extra', 'znc-perl' ]
+      $zc_packages = [ 'znc', 'znc-tcl', 'znc-perl' ]
     }
   }
 
@@ -39,6 +39,6 @@ class znc::params {
   $zc_gid        = '400'
   $zc_config_dir = '/etc/znc'
   $zc_auth_type  = 'plain'
-  $zc_ssl        = 'false'
-  $zc_port       = '8080'
+  $zc_ssl        = true
+  $zc_port       = '7777'
 }

@@ -1,32 +1,32 @@
 <User <%= @name %>>
+        Pass       = plain#<%= @pass %>
+        Admin      = <%= @admin %>
         Nick       = <%= @name %>
         AltNick    = <%= @name %>_
         Ident      = <%= @name %>
-        RealName   = <%= @name %>
-        Pass = plain#<%= @pass %>
-        QuitMsg = '<%= @quitmsg %>'
+        RealName   = <%= @realname %>
+        Buffer     = 50
+        AutoClearChanBuffer = true
         ChanModes  = +stn
-        Buffer     = <%= @buffer %>
-        KeepBuffer = <%= @keepbuffer %>
-        MultiClients = true
-        BounceDCCs = true
-        DenyLoadMod = false
-        Admin = <%= @admin %>
-        DenySetVHost = false
-        DCCLookupMethod = default
-        TimestampFormat = [%H:%M:%S]
-        AppendTimestamp = false
-        PrependTimestamp = true
-        TimezoneOffset = 0.00
-        JoinTries = 10
-        MaxJoins = 5
-        IRCConnectEnabled = true
-        Server     = <%= @server %> <% if @ssl == 'true' -%>+<% end -%><%= @port %>
-        
-        <%- if @default_channel -%>
-        <Chan <%= @default_channel %>>
-        Modes = +stn
-        </Chan>
-        <%- end -%>
 
+        LoadModule = chansaver
+        LoadModule = controlpanel
+        LoadModule = perform
+        LoadModule = webadmin
+
+        <Network freenode>
+                LoadModule = chansaver
+                LoadModule = keepnick
+                LoadModule = kickrejoin
+                LoadModule = nickserv
+                LoadModule = perform
+                LoadModule = simple_away
+
+                Server     = <%= @server %> <% if @ssl == 'true' -%>+<% end -%><%= @port %>
+
+                <%- if @default_channel -%>
+                <Chan <%= @default_channel %>>
+                </Chan>
+                <%- end -%>
+        </Network>
 </User>

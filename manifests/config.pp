@@ -13,7 +13,7 @@
 #   $countryName: Country for SSL Self Signed Cert
 #   $emailAddress: Admin email for SSL Self Signed Cert
 #   $commonName: Common Name for SSL Self Signed Cert
-# 
+#
 # Actions:
 #  - Sets up ZNC Seed Configuration
 #  - Sets up SSL (if configured)
@@ -35,7 +35,7 @@ class znc::config(
   $countryName          = undef,
   $emailAddress         = undef,
   $commonName           = undef,
-  $port,
+  $port                 = 7777,
 ) {
   File {
     owner => $znc::params::zc_user,
@@ -52,7 +52,7 @@ class znc::config(
     gid        => $znc::params::zc_gid,
     shell      => '/bin/bash',
     comment    => 'ZNC Service Account',
-    managehome => 'true',
+    managehome => true,
   }
   group { $znc::params::zc_group:
     ensure => present,
@@ -65,10 +65,10 @@ class znc::config(
     ensure => directory,
   }
   file { "${znc::params::zc_config_dir}/configs/users":
-     ensure  => directory,
-     purge   => true,
-     recurse => true,
-     notify  => Exec['remove-unmanaged-users'],
+      ensure  => directory,
+      purge   => true,
+      recurse => true,
+      notify  => Exec['remove-unmanaged-users'],
   }
   file { "${znc::params::zc_config_dir}/configs/znc.conf.header":
     ensure  => file,
@@ -86,15 +86,15 @@ class znc::config(
     content => template("znc/etc/init.d/znc.${znc::params::zc_suffix}.erb"),
   }
   file { "${znc::params::zc_config_dir}/configs/clean_users":
-     ensure => file,
-     owner  => 'root',
-     group  => 'root',
-     mode   => '0700',
-     content => template('znc/bin/clean_znc_users.erb'),
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0700',
+    content => template('znc/bin/clean_znc_users.erb'),
   }
 
   # Bootstrap SSL
-  if $ssl == 'true' and !$ssl_source {
+  if $ssl == true and !$ssl_source {
     file { "${znc::params::zc_config_dir}/ssl":
       ensure => directory,
       mode   => '0600',
@@ -118,7 +118,7 @@ class znc::config(
       creates => "${znc::params::zc_config_dir}/znc.pem",
     }
   }
-  
+
   if $ssl_source {
     file { "${znc::params::zc_config_dir}/znc.pem":
       ensure => file,
@@ -134,8 +134,8 @@ class znc::config(
     require => File["${znc::params::zc_config_dir}/configs/znc.conf.header"],
   }
   exec { 'remove-unmanaged-users':
-     command     => "${znc::params::zc_config_dir}/configs/clean_users",
-     refreshonly => 'true',
-     require     => File["${znc::params::zc_config_dir}/configs/clean_users"],
+    command     => "${znc::params::zc_config_dir}/configs/clean_users",
+    refreshonly => true,
+    require     => File["${znc::params::zc_config_dir}/configs/clean_users"],
   }
 }
