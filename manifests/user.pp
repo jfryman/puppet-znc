@@ -19,30 +19,29 @@
 #   znc::user { 'jfryman': }
 #
 # This class file is not called directly
-define znc::user(
-  $ensure = 'present',
-  $realname = '',
-  $admin  = false,
-  $buffer = 500,
-  $keepbuffer = true,
-  $server = 'irc.freenode.net',
-  $port = 6667,
-  $ssl = false,
-  $quitmsg = 'quit',
-  $pass = '',
+define znc::user (
+  $ensure          = 'present',
+  $realname        = '',
+  $admin           = false,
+  $buffer          = 500,
+  $keepbuffer      = true,
+  $server          = 'irc.freenode.net',
+  $port            = 6667,
+  $ssl             = false,
+  $quitmsg         = 'quit',
+  $pass            = '',
   $default_channel = '#persTest',
-  $channels = ['#persTest1','#persTest2'],
-) {
+  $channels        = ['#persTest1', '#persTest2'],) {
   include znc::params
 
   File {
-    owner => 'root',
-    group => 'root',
+    owner => $znc::params::zc_user,
+    group => $znc::params::zc_group,
     mode  => '0600',
   }
+
   Exec {
-    path => '/bin:/sbin:/usr/bin:/usr/sbin',
-  }
+    path => '/bin:/sbin:/usr/bin:/usr/sbin', }
 
   if $ensure == 'present' {
     file { "${znc::params::zc_config_dir}/configs/users/${name}":
@@ -50,6 +49,7 @@ define znc::user(
       content => template('znc/configs/znc.conf.seed.erb'),
       before  => Exec["add-znc-user-${name}"],
     }
+
     exec { "add-znc-user-${name}":
       command => "cat ${znc::params::zc_config_dir}/configs/users/${name} >> ${znc::params::zc_config_dir}/configs/znc.conf",
       unless  => "grep ${name} ${znc::params::zc_config_dir}/configs/znc.conf",

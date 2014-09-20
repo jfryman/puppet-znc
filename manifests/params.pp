@@ -22,16 +22,7 @@
 # Sample Usage:
 #   This method should not be called directly.
 class znc::params {
-  case $::operatingsystem {
-    redhat,fedora,centos: {
-      $zc_suffix   = 'redhat'
-      $zc_packages = ['znc', 'znc-extra']
-    }
-    ubuntu, debian: {
-      $zc_suffix = 'debian'
-      $zc_packages = [ 'znc', 'znc-tcl', 'znc-perl' ]
-    }
-  }
+  $zc_packages = [ 'znc', 'znc-tcl', 'znc-perl' ]
 
   $zc_user       = 'znc'
   $zc_group      = 'znc'
