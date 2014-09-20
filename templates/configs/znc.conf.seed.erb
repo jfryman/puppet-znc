@@ -28,5 +28,9 @@
                 <Chan <%= @default_channel %>>
                 </Chan>
                 <%- end -%>
+                <%- @channels.each do |channel| -%>
+                <Chan <%= channel %>>
+                </Chan>
+                <%- end -%>
         </Network>
 </User>
