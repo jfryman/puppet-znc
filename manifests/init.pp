@@ -23,7 +23,7 @@
 #
 # Requires:
 #  - An IRC server to connect to.
-#  - Class[stdlib]. This is Puppet Labs standard library to include additional methods for use within Puppet. [https://github.com/puppetlabs/puppetlabs-stdlib]
+#  - Class[stdlib].
 #
 # Sample Usage:
 #  class { 'znc':
@@ -46,7 +46,7 @@ class znc(
   $emailAddress        = undef,
   $commonName          = undef,
   $port                = $znc::params::zc_port
-) inherits znc::params {
+) inherits ::znc::params {
   include stdlib
 
   ### Begin Flow Logic ###

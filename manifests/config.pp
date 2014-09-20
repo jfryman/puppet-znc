@@ -92,9 +92,9 @@ class znc::config (
 
   file { "${znc::params::zc_config_dir}/configs/clean_users":
     ensure  => file,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0700',
+    owner   => $znc::params::zc_uid,
+    group   => $znc::params::zc_gid,
+    mode    => '0754',
     content => template('znc/bin/clean_znc_users.erb'),
   }
 

@@ -5,7 +5,6 @@
 #   Class: znc.
 #
 # Parameters:
-#   $zc_suffix   - The suffix for the init.d script for ZNC located in files/etc/init.d/
 #   $zc_packages - List of packages required to install ZNC
 #   $zc_auth_type - Default auth type if not configured
 #   $zc_ssl - Default SSL status if not configured
