@@ -65,7 +65,7 @@ class znc::config (
 
   file { "${znc::params::zc_config_dir}/configs": ensure => directory, }
 
-  file { "${znc::params::zc_config_dir}/configs/users":
+  file { "${znc::params::zc_config_dir}/configs/puppet_users":
     ensure  => directory,
     purge   => true,
     recurse => true,
@@ -90,7 +90,7 @@ class znc::config (
     content => template('znc/etc/init.d/znc.erb'),
   }
 
-  file { "${znc::params::zc_config_dir}/configs/clean_users":
+  file { "${znc::params::zc_config_dir}/bin/clean_users":
     ensure  => file,
     owner   => $znc::params::zc_uid,
     group   => $znc::params::zc_gid,
@@ -142,8 +142,8 @@ class znc::config (
   }
 
   exec { 'remove-unmanaged-users':
-    command     => "${znc::params::zc_config_dir}/configs/clean_users",
+    command     => "${znc::params::zc_config_dir}/bin/clean_users",
     refreshonly => true,
-    require     => File["${znc::params::zc_config_dir}/configs/clean_users"],
+    require     => File["${znc::params::zc_config_dir}/bin/clean_users"],
   }
 }

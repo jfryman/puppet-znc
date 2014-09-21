@@ -44,14 +44,14 @@ define znc::user (
     path => '/bin:/sbin:/usr/bin:/usr/sbin', }
 
   if $ensure == 'present' {
-    file { "${znc::params::zc_config_dir}/configs/users/${name}":
+    file { "${znc::params::zc_config_dir}/configs/puppet_users/${name}":
       ensure  => file,
       content => template('znc/configs/znc.conf.seed.erb'),
       before  => Exec["add-znc-user-${name}"],
     }
 
     exec { "add-znc-user-${name}":
-      command => "cat ${znc::params::zc_config_dir}/configs/users/${name} >> ${znc::params::zc_config_dir}/configs/znc.conf",
+      command => "cat ${znc::params::zc_config_dir}/configs/puppet_users/${name} >> ${znc::params::zc_config_dir}/configs/znc.conf",
       unless  => "grep \"<User ${name}>\" ${znc::params::zc_config_dir}/configs/znc.conf",
       require => Exec['initialize-znc-config'],
       notify  => Service['znc'],
