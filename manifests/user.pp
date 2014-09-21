@@ -52,7 +52,7 @@ define znc::user (
 
     exec { "add-znc-user-${name}":
       command => "cat ${znc::params::zc_config_dir}/configs/users/${name} >> ${znc::params::zc_config_dir}/configs/znc.conf",
-      unless  => "grep ${name} ${znc::params::zc_config_dir}/configs/znc.conf",
+      unless  => "grep \"<User ${name}>\" ${znc::params::zc_config_dir}/configs/znc.conf",
       require => Exec['initialize-znc-config'],
       notify  => Service['znc'],
     }
