@@ -87,7 +87,7 @@ class znc::config (
     owner   => 'root',
     group   => 'root',
     mode    => '0755',
-    content => template('znc/etc/init.d/znc.erb'),
+    content => template("znc/etc/init.d/znc.${::znc::params::zc_suffix}.erb"),
   }
 
   file { "${::znc::params::zc_config_dir}/bin/clean_users":
