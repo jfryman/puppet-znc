@@ -15,7 +15,9 @@
 # This class file is not called directly
 class znc::service {
   service { 'znc':
-    ensure  => 'running',
-    enable  => true,
+    ensure      => 'running',
+    enable      => true,
+    hasstatus   => true,
+    hasrestart  => true,
   }
 }
