@@ -39,45 +39,45 @@ class znc::config (
   $commonName          = undef,
   $port                = 7777,) {
   File {
-    owner => $znc::params::zc_user,
-    group => $znc::params::zc_group,
+    owner => $::znc::params::zc_user,
+    group => $::znc::params::zc_group,
     mode  => '0600',
   }
 
   Exec {
     path => '/bin:/sbin:/usr/bin:/usr/sbin' }
 
-  user { $znc::params::zc_user:
+  user { $::znc::params::zc_user:
     ensure     => present,
-    uid        => $znc::params::zc_uid,
-    gid        => $znc::params::zc_gid,
+    uid        => $::znc::params::zc_uid,
+    gid        => $::znc::params::zc_gid,
     shell      => '/usr/sbin/nologin',
     comment    => 'ZNC Service Account',
     system     => true,
   }
 
-  group { $znc::params::zc_group:
+  group { $::znc::params::zc_group:
     ensure => present,
-    gid    => $znc::params::zc_gid,
+    gid    => $::znc::params::zc_gid,
   }
 
-  file { $znc::params::zc_config_dir: ensure => directory, }
+  file { $::znc::params::zc_config_dir: ensure => directory, }
 
-  file { "${znc::params::zc_config_dir}/configs": ensure => directory, }
+  file { "${::znc::params::zc_config_dir}/configs": ensure => directory, }
 
-  file { "${znc::params::zc_config_dir}/configs/puppet_users":
+  file { "${::znc::params::zc_config_dir}/configs/puppet_users":
     ensure  => directory,
     purge   => true,
     recurse => true,
     notify  => Exec['remove-unmanaged-users'],
   }
 
-  file { "${znc::params::zc_config_dir}/configs/znc.conf.header":
+  file { "${::znc::params::zc_config_dir}/configs/znc.conf.header":
     ensure  => file,
     content => template('znc/configs/znc.conf.header.erb'),
   }
 
-  file { "${znc::params::zc_config_dir}/configs/znc.conf":
+  file { "${::znc::params::zc_config_dir}/configs/znc.conf":
     ensure  => file,
     require => Exec['initialize-znc-config'],
   }
@@ -90,44 +90,44 @@ class znc::config (
     content => template('znc/etc/init.d/znc.erb'),
   }
 
-  file { "${znc::params::zc_config_dir}/bin/clean_users":
+  file { "${::znc::params::zc_config_dir}/bin/clean_users":
     ensure  => file,
-    owner   => $znc::params::zc_uid,
-    group   => $znc::params::zc_gid,
+    owner   => $::znc::params::zc_uid,
+    group   => $::znc::params::zc_gid,
     mode    => '0754',
     content => template('znc/bin/clean_znc_users.erb'),
   }
 
   # Bootstrap SSL
   if $ssl == true and !$ssl_source {
-    file { "${znc::params::zc_config_dir}/ssl":
+    file { "${::znc::params::zc_config_dir}/ssl":
       ensure => directory,
       mode   => '0600',
     }
 
-    file { "${znc::params::zc_config_dir}/bin": ensure => directory, }
+    file { "${::znc::params::zc_config_dir}/bin": ensure => directory, }
 
-    file { "${znc::params::zc_config_dir}/bin/generate_znc_ssl":
+    file { "${::znc::params::zc_config_dir}/bin/generate_znc_ssl":
       ensure  => file,
       mode    => '0755',
       content => template('znc/bin/generate_znc_ssl.erb'),
-      require => File["${znc::params::zc_config_dir}/ssl"],
+      require => File["${::znc::params::zc_config_dir}/ssl"],
     }
 
-    file { "${znc::params::zc_config_dir}/znc.pem":
+    file { "${::znc::params::zc_config_dir}/znc.pem":
       ensure  => 'file',
       mode    => '0600',
       require => Exec['create-self-signed-znc-ssl'],
     }
 
     exec { 'create-self-signed-znc-ssl':
-      command => "${znc::params::zc_config_dir}/bin/generate_znc_ssl",
-      creates => "${znc::params::zc_config_dir}/znc.pem",
+      command => "${::znc::params::zc_config_dir}/bin/generate_znc_ssl",
+      creates => "${::znc::params::zc_config_dir}/znc.pem",
     }
   }
 
   if $ssl_source {
-    file { "${znc::params::zc_config_dir}/znc.pem":
+    file { "${::znc::params::zc_config_dir}/znc.pem":
       ensure => file,
       mode   => '0600',
       source => $ssl_source,
@@ -136,14 +136,14 @@ class znc::config (
 
   # Bootstrap config files
   exec { 'initialize-znc-config':
-    command => "cat ${znc::params::zc_config_dir}/configs/znc.conf.header > ${znc::params::zc_config_dir}/configs/znc.conf",
-    creates => "${znc::params::zc_config_dir}/configs/znc.conf",
-    require => File["${znc::params::zc_config_dir}/configs/znc.conf.header"],
+    command => "cat ${::znc::params::zc_config_dir}/configs/znc.conf.header > ${::znc::params::zc_config_dir}/configs/znc.conf",
+    creates => "${::znc::params::zc_config_dir}/configs/znc.conf",
+    require => File["${::znc::params::zc_config_dir}/configs/znc.conf.header"],
   }
 
   exec { 'remove-unmanaged-users':
-    command     => "${znc::params::zc_config_dir}/bin/clean_users",
+    command     => "${::znc::params::zc_config_dir}/bin/clean_users",
     refreshonly => true,
-    require     => File["${znc::params::zc_config_dir}/bin/clean_users"],
+    require     => File["${::znc::params::zc_config_dir}/bin/clean_users"],
   }
 }

@@ -16,7 +16,7 @@
 # Sample Usage:
 #   This method should not be called directly.
 class znc::package {
-  package { $znc::params::zc_packages:
+  package { $::znc::params::zc_packages:
     ensure => present
   }
 }

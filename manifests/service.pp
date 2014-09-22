@@ -20,4 +20,10 @@ class znc::service {
     hasstatus   => true,
     hasrestart  => true,
   }
+
+  exec { 'znc-reload':
+    command     => '/etc/init.d/znc reload',
+    refreshonly => true,
+    logoutput   => on_failure,
+  }
 }

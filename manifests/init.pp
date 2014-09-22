@@ -36,23 +36,23 @@
 #    commonName          => 'irc.frymanandassociates.net',
 #  }
 class znc(
-  $auth_type           = $znc::params::zc_auth_type,
+  $auth_type           = $::znc::params::zc_auth_type,
   $ssl_source          = undef,
-  $ssl                 = $znc::params::zc_ssl,
+  $ssl                 = $::znc::params::zc_ssl,
   $organizationName    = undef,
   $localityName        = undef,
   $stateOrProvinceName = undef,
   $countryName         = undef,
   $emailAddress        = undef,
   $commonName          = undef,
-  $port                = $znc::params::zc_port
+  $port                = $::znc::params::zc_port
 ) inherits ::znc::params {
   include stdlib
 
   ### Begin Flow Logic ###
   anchor { 'znc::begin': }
-  -> class { 'znc::package': }
-  -> class { 'znc::config':
+  -> class { '::znc::package': }
+  -> class { '::znc::config':
       auth_type           => $auth_type,
       ssl                 => $ssl,
       ssl_source          => $ssl_source,
@@ -64,6 +64,6 @@ class znc(
       commonName          => $commonName,
       port                => $port,
     }
-  ~> class { 'znc::service': }
+  ~> class { '::znc::service': }
   -> anchor { 'znc::end': }
 }
