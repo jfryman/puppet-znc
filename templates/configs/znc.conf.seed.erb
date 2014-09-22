@@ -1,13 +1,14 @@
 <User <%= @name %>>
-        Pass       = plain#<%= @pass %>
         Admin      = <%= @admin %>
+        Allow      = *
         Nick       = <%= @name %>
         AltNick    = <%= @name %>_
         Ident      = <%= @name %>
         RealName   = <%= @realname %>
-        Buffer     = 50
         AutoClearChanBuffer = true
+        Buffer     = 50
         ChanModes  = +stn
+        QuitMsg = Bye
 
         LoadModule = chansaver
         LoadModule = controlpanel
@@ -28,9 +29,14 @@
                 <Chan <%= @default_channel %>>
                 </Chan>
                 <%- end -%>
-                <%- @channels.each do |channel| -%>
+                <% @channels.each do |channel| %>
                 <Chan <%= channel %>>
                 </Chan>
                 <%- end -%>
         </Network>
+
+        <Pass password>
+                Hash = <%= @pass %>
+                Method = Plain
+        </Pass>
 </User>
