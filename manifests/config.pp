@@ -51,9 +51,9 @@ class znc::config (
     ensure     => present,
     uid        => $znc::params::zc_uid,
     gid        => $znc::params::zc_gid,
-    shell      => '/bin/bash',
+    shell      => '/usr/sbin/nologin',
     comment    => 'ZNC Service Account',
-    managehome => true,
+    system     => true,
   }
 
   group { $znc::params::zc_group:
