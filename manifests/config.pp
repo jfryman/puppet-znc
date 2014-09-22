@@ -69,7 +69,8 @@ class znc::config (
     ensure  => directory,
     purge   => true,
     recurse => true,
-    notify  => Exec['remove-unmanaged-users'],
+    # if we have no modules for users, this solution doesn't work
+    #notify  => Exec['remove-unmanaged-users'],
   }
 
   file { "${::znc::params::zc_config_dir}/configs/znc.conf.header":

@@ -10,7 +10,6 @@
 
 AnonIPLimit = 10
 ConnectDelay = 5
-LoadModule = partyline
 LoadModule = webadmin
 <% if @auth_type == 'sasl' -%>
 LoadModule   = saslauth saslauthd
@@ -25,7 +24,7 @@ Version = 1.4
         AllowWeb = true
         Port = <%= @port %>
         IPv4 = true
-        IPv6 = false
+        IPv6 = true
         SSL = true
 </Listener>
 

@@ -10,18 +10,10 @@
         ChanModes  = +stn
         QuitMsg = Bye
 
-        LoadModule = chansaver
-        LoadModule = controlpanel
-        LoadModule = perform
-        LoadModule = webadmin
-
         <Network freenode>
-                LoadModule = chansaver
-                LoadModule = keepnick
-                LoadModule = kickrejoin
-                LoadModule = nickserv
-                LoadModule = perform
-                LoadModule = simple_away
+                FloodBurst = 4
+                FloodRate = 1.00
+                IRCConnectEnabled = true
 
                 Server     = <%= @server %> <% if @ssl == 'true' -%>+<% end -%><%= @port %>
 
