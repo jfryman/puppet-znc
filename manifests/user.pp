@@ -54,8 +54,21 @@ define znc::user (
       command => "cat ${::znc::params::zc_config_dir}/configs/puppet_users/${name} >> ${::znc::params::zc_config_dir}/configs/znc.conf",
       unless  => "grep \"<User ${name}>\" ${::znc::params::zc_config_dir}/configs/znc.conf",
       require => Exec['initialize-znc-config'],
-      #notify  => Service['znc'],
       notify  => Exec['znc-reload'],
     }
   }
+
+  if $ensure == 'absent' {
+    file { "${::znc::params::zc_config_dir}/configs/puppet_users/${name}":
+      ensure  => absent,
+      before  => Exec["remove-znc-user-${name}"],
+    }
+
+    exec { "remove-znc-user-${name}":
+      command => "sed -i \"/<User ${name}>/,/<\\/User>/ d\" ${::znc::params::zc_config_dir}/configs/znc.conf",
+      onlyif  => "grep -c \"<User ${name}>\" ${::znc::params::zc_config_dir}/configs/znc.conf",
+      notify  => Exec['znc-reload'],
+    }
+  }
+
 }
