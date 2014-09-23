@@ -9,6 +9,7 @@
 #   $ssl: (true|false). To enable or disable SSL support. Will autogen a SSL certificate.
 #   $port: port to run ZNC on.
 #   $motd: Message of the day.
+#   $ipv6: Enable/Disable IPv6 (enabled by default)
 #   $organizationName: Org Name for SSL Self Signed Cert
 #   $localityName: City for SSL Self Signed Cert
 #   $stateOrProvinceName: State or Province for SSL Self Signed Cert
@@ -38,7 +39,8 @@ class znc::config (
   $emailAddress        = undef,
   $commonName          = undef,
   $motd                = undef,
-  $port                = 7777,) {
+  $ipv6                = undef,
+  $port                = undef,) {
   File {
     owner => $::znc::params::zc_user,
     group => $::znc::params::zc_group,

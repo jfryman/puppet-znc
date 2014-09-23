@@ -23,7 +23,7 @@
 #
 # Requires:
 #  - An IRC server to connect to.
-#  - Class[stdlib].
+#  - Class[stdlib]. https://forge.puppetlabs.com/puppetlabs/stdlib
 #
 # Sample Usage:
 #  class { 'znc':
@@ -47,6 +47,7 @@ class znc(
   $emailAddress        = undef,
   $commonName          = undef,
   $motd                = undef,
+  $ipv6                = $::znc::params::zc_ipv6,
   $port                = $::znc::params::zc_port
 ) inherits ::znc::params {
   include stdlib
@@ -65,6 +66,7 @@ class znc(
       emailAddress        => $emailAddress,
       commonName          => $commonName,
       motd                => $motd,
+      ipv6                => $ipv6,
       port                => $port,
     }
   ~> class { '::znc::service': }
