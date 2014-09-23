@@ -6,9 +6,9 @@
 #
 # Parameters:
 #   $auth_type: (plain|sasl). Will determine to use local auth or SASL auth.
-#   $ssl: (true|false). To enable or disable SSL support. Will autogen a SSL
-#   certificate.
+#   $ssl: (true|false). To enable or disable SSL support. Will autogen a SSL certificate.
 #   $port: port to run ZNC on.
+#   $motd: Message of the day.
 #   $organizationName: Org Name for SSL Self Signed Cert
 #   $localityName: City for SSL Self Signed Cert
 #   $stateOrProvinceName: State or Province for SSL Self Signed Cert
@@ -37,6 +37,7 @@ class znc::config (
   $countryName         = undef,
   $emailAddress        = undef,
   $commonName          = undef,
+  $motd                = undef,
   $port                = 7777,) {
   File {
     owner => $::znc::params::zc_user,

@@ -12,9 +12,12 @@ AnonIPLimit = 10
 ConnectDelay = 5
 LoadModule = webadmin
 <% if @auth_type == 'sasl' -%>
-LoadModule   = saslauth saslauthd
+LoadModule = saslauth saslauthd
 <% end -%>
 MaxBufferSize = 500
+<% if @motd -%>
+Motd = <%= @motd %>
+<% end -%>
 ProtectWebSessions = true
 ServerThrottle = 30
 Version = 1.4

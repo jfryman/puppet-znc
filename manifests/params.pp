@@ -43,4 +43,5 @@ class znc::params {
   $zc_auth_type  = 'plain'
   $zc_ssl        = true
   $zc_port       = '7777'
+  $zc_motd       = ''
 }

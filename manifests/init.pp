@@ -34,6 +34,7 @@
 #    countryName         => 'US',
 #    emailAddress        => 'james@frymanandassociates.net',
 #    commonName          => 'irc.frymanandassociates.net',
+#    motd                => 'Message of the server'
 #  }
 class znc(
   $auth_type           = $::znc::params::zc_auth_type,
@@ -45,6 +46,7 @@ class znc(
   $countryName         = undef,
   $emailAddress        = undef,
   $commonName          = undef,
+  $motd                = undef,
   $port                = $::znc::params::zc_port
 ) inherits ::znc::params {
   include stdlib
@@ -62,6 +64,7 @@ class znc(
       countryName         => $countryName,
       emailAddress        => $emailAddress,
       commonName          => $commonName,
+      motd                => $motd,
       port                => $port,
     }
   ~> class { '::znc::service': }

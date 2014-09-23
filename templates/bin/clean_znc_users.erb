@@ -1,5 +1,5 @@
 #!/bin/bash -x
-ZNC_CONFIG_BASEDIR=<%= scope.lookupvar('znc::params::zc_config_dir') %>
+ZNC_CONFIG_BASEDIR=<%= scope.lookupvar('::znc::params::zc_config_dir') %>
 ACTIVE_USERS=`ls -F ${ZNC_CONFIG_BASEDIR}/users/ | xargs -n1 basename`
 DEFINED_USERS=`grep \<User ${ZNC_CONFIG_BASEDIR}/configs/znc.conf | awk '{print $2}' | sed 's/\(.*\)./\1/'`
 
