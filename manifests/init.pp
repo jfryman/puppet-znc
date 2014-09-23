@@ -4,6 +4,7 @@
 #   This module is designed to install and manage ZNC, and IRC Bouncer
 #
 #   This module has been built and tested on RHEL systems.
+#   This module has been tested on Ubuntu 14.04 LTS (with znc version 1.4)
 #
 # Parameters:
 #   $auth_type: (plain|sasl). Will determine to use local auth or SASL auth.
