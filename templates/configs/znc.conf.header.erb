@@ -19,6 +19,9 @@ MaxBufferSize = 500
 Motd = <%= @motd %>
 <% end -%>
 ProtectWebSessions = true
+<% if @ssl==true -%>
+SSLCertFile = /etc/znc/znc.pem
+<% end -%>
 ServerThrottle = 30
 Version = 1.4
 
@@ -28,6 +31,6 @@ Version = 1.4
         Port = <%= @port %>
         IPv4 = true
         IPv6 = <%= @ipv6 %>
-        SSL = true
+        SSL = <%= @ssl %>
 </Listener>
 

@@ -1,21 +1,29 @@
 <User <%= @name %>>
-        Admin      = <%= @admin %>
-        Allow      = *
-        Nick       = <%= @name %>
-        AltNick    = <%= @name %>_
-        Ident      = <%= @name %>
-        RealName   = <%= @realname %>
+        Admin           = <%= @admin %>
+        Allow           = *
+        AltNick         = <%= @name %>_
+        AppendTimestamp = false
         AutoClearChanBuffer = true
-        Buffer     = 50
-        ChanModes  = +stn
-        QuitMsg = Bye
+        Buffer          = 50
+        ChanModes       = +stn
+        DenyLoadMod     = false
+        DenySetBindHost = false
+        Ident           = <%= @name %>
+        JoinTries       = 10
+        MaxJoins        = 0
+        MaxNetworks     = 1
+        MultiClients    = true
+        Nick            = <%= @name %>
+        PrependTimestamp = true
+        QuitMsg         = Bye
+        RealName        = <%= @realname %>
+        TimestampFormat = [%H:%M:%S]
 
         <Network freenode>
                 FloodBurst = 4
                 FloodRate = 1.00
                 IRCConnectEnabled = true
-
-                Server     = <%= @server %> <% if @ssl == 'true' -%>+<% end -%><%= @port %>
+                Server = <%= @server %> <% if @ssl == 'true' -%>+<% end -%><%= @port %>
 
                 <%- if @default_channel -%>
                 <Chan <%= @default_channel %>>

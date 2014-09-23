@@ -94,6 +94,8 @@ class znc::config (
     content => template("znc/etc/init.d/znc.${::znc::params::zc_suffix}.erb"),
   }
 
+  file { "${::znc::params::zc_config_dir}/bin": ensure => directory, }
+
   file { "${::znc::params::zc_config_dir}/bin/clean_users":
     ensure  => file,
     owner   => $::znc::params::zc_uid,
@@ -108,8 +110,6 @@ class znc::config (
       ensure => directory,
       mode   => '0600',
     }
-
-    file { "${::znc::params::zc_config_dir}/bin": ensure => directory, }
 
     file { "${::znc::params::zc_config_dir}/bin/generate_znc_ssl":
       ensure  => file,
