@@ -19,40 +19,60 @@
 #   znc::user { 'jfryman': }
 #
 # This class file is not called directly
-define znc::user(
-  $ensure = 'present',
-  $admin  = 'false',
-  $buffer = 500,
-  $keepbuffer = 'false',
-  $server = 'irc.freenode.net',
-  $port = 6667,
-  $ssl = 'false',
-  $quitmsg = 'puppet <3',
-  $pass = '',
-  $default_channel = undef,
-) {
+define znc::user (
+  $ensure          = 'present',
+  $realname        = undef,
+  $admin           = false,
+  $buffer          = 500,
+  $keepbuffer      = true,
+  $server          = 'irc.freenode.net',
+  $port            = 6667,
+  $ssl             = false,
+  $quitmsg         = 'quit',
+  $pass            = '',
+  $channels        = undef,) {
   include znc::params
 
   File {
-    owner => 'root',
-    group => 'root',
+    owner => $::znc::params::zc_user,
+    group => $::znc::params::zc_group,
     mode  => '0600',
   }
+
   Exec {
-    path => '/bin:/sbin:/usr/bin:/usr/sbin',
-  }
+    path => '/bin:/sbin:/usr/bin:/usr/sbin', }
 
   if $ensure == 'present' {
-    file { "${znc::params::zc_config_dir}/configs/users/${name}":
+    file { "${::znc::params::zc_config_dir}/configs/puppet_users/${name}":
       ensure  => file,
       content => template('znc/configs/znc.conf.seed.erb'),
       before  => Exec["add-znc-user-${name}"],
     }
+
     exec { "add-znc-user-${name}":
-      command => "cat ${znc::params::zc_config_dir}/configs/users/${name} >> ${znc::params::zc_config_dir}/configs/znc.conf",
-      unless  => "grep ${name} ${znc::params::zc_config_dir}/configs/znc.conf",
+      command => "cat ${::znc::params::zc_config_dir}/configs/puppet_users/${name} >> ${::znc::params::zc_config_dir}/configs/znc.conf",
+      unless  => "grep \"<User ${name}>\" ${::znc::params::zc_config_dir}/configs/znc.conf",
       require => Exec['initialize-znc-config'],
-      notify  => Service['znc'],
+      notify  => Exec['znc-reload'],
     }
   }
+
+  if $ensure == 'absent' {
+    file { "${::znc::params::zc_config_dir}/users/${name}":
+      ensure  => absent,
+      force   => true,
+    }
+
+    file { "${::znc::params::zc_config_dir}/configs/puppet_users/${name}":
+      ensure  => absent,
+      before  => Exec["remove-znc-user-${name}"],
+    }
+
+    exec { "remove-znc-user-${name}":
+      command => "sed -i \"/<User ${name}>/,/<\\/User>/ d\" ${::znc::params::zc_config_dir}/configs/znc.conf",
+      onlyif  => "grep -c \"<User ${name}>\" ${::znc::params::zc_config_dir}/configs/znc.conf",
+      notify  => Exec['znc-reload'],
+    }
+  }
+
 }

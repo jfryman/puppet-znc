@@ -1,32 +1,42 @@
 <User <%= @name %>>
-        Nick       = <%= @name %>
-        AltNick    = <%= @name %>_
-        Ident      = <%= @name %>
-        RealName   = <%= @name %>
-        Pass = plain#<%= @pass %>
-        QuitMsg = '<%= @quitmsg %>'
-        ChanModes  = +stn
-        Buffer     = <%= @buffer %>
-        KeepBuffer = <%= @keepbuffer %>
-        MultiClients = true
-        BounceDCCs = true
-        DenyLoadMod = false
-        Admin = <%= @admin %>
-        DenySetVHost = false
-        DCCLookupMethod = default
-        TimestampFormat = [%H:%M:%S]
+        Admin           = <%= @admin %>
+        Allow           = *
+        AltNick         = <%= @name %>_
         AppendTimestamp = false
+        AutoClearChanBuffer = true
+        Buffer          = 50
+        ChanModes       = +stn
+        DenyLoadMod     = false
+        DenySetBindHost = false
+        Ident           = <%= @name %>
+        JoinTries       = 10
+        MaxJoins        = 0
+        MaxNetworks     = 1
+        MultiClients    = true
+        Nick            = <%= @name %>
         PrependTimestamp = true
-        TimezoneOffset = 0.00
-        JoinTries = 10
-        MaxJoins = 5
-        IRCConnectEnabled = true
-        Server     = <%= @server %> <% if @ssl == 'true' -%>+<% end -%><%= @port %>
-        
-        <%- if @default_channel -%>
-        <Chan <%= @default_channel %>>
-        Modes = +stn
-        </Chan>
-        <%- end -%>
+        QuitMsg         = Bye
+        <% if @realname %>
+        RealName        = <%= @realname %>
+        <% end %>
+        TimestampFormat = [%H:%M:%S]
 
+        <Network freenode>
+                FloodBurst = 4
+                FloodRate = 1.00
+                IRCConnectEnabled = true
+                Server = <%= @server %> <% if @ssl == 'true' -%>+<% end -%><%= @port %>
+
+                <%- if @channels -%>
+                <% @channels.each do |channel| %>
+                <Chan <%= channel %>>
+                </Chan>
+                <%- end -%>
+                <%- end -%>
+        </Network>
+
+        <Pass password>
+                Hash = <%= @pass %>
+                Method = Plain
+        </Pass>
 </User>

@@ -4,6 +4,7 @@
 #   This module is designed to install and manage ZNC, and IRC Bouncer
 #
 #   This module has been built and tested on RHEL systems.
+#   This module has been tested on Ubuntu 14.04 LTS (with znc version 1.4)
 #
 # Parameters:
 #   $auth_type: (plain|sasl). Will determine to use local auth or SASL auth.
@@ -16,54 +17,65 @@
 #   $countryName: Country for SSL Self Signed Cert
 #   $emailAddress: Admin email for SSL Self Signed Cert
 #   $commonName: Common Name for SSL Self Signed Cert
-#   
+#
 # Actions:
 #   This module will install the ZNC and prep it to connect
 #   to a local IRC server. Per-user settings can be reconfigured.
 #
 # Requires:
 #  - An IRC server to connect to.
-#  - Class[stdlib]. This is Puppet Labs standard library to include additional methods for use within Puppet. [https://github.com/puppetlabs/puppetlabs-stdlib]
-# 
+#  - Class[stdlib]. https://forge.puppetlabs.com/puppetlabs/stdlib
+#
 # Sample Usage:
-#  class { 'znc': 
-#    ssl                 => 'true', 
+#  class { 'znc':
+#    ssl                 => 'true',
 #    organizationName    => 'Fryman and Associates, Inc',
 #    localityName        => 'Nashville',
 #    stateOrProvinceName => 'TN',
 #    countryName         => 'US',
 #    emailAddress        => 'james@frymanandassociates.net',
 #    commonName          => 'irc.frymanandassociates.net',
+#    motd                => 'Message of the server'
+#    global_modules      => ['module_name1','module_name2']
 #  }
+#  NOTE: In case of global_modules, please be sure, that the list
+#   of provided modules are available for global scope [http://wiki.znc.in/Modules]
+
 class znc(
-  $auth_type           = $znc::params::zc_auth_type,
+  $auth_type           = $::znc::params::zc_auth_type,
   $ssl_source          = undef,
-  $ssl                 = $znc::params::zc_ssl,
+  $ssl                 = $::znc::params::zc_ssl,
   $organizationName    = undef,
   $localityName        = undef,
   $stateOrProvinceName = undef,
   $countryName         = undef,
   $emailAddress        = undef,
   $commonName          = undef,
-  $port                = $znc::params::zc_port
-) inherits znc::params {
+  $motd                = undef,
+  $global_modules      = undef,
+  $ipv6                = $::znc::params::zc_ipv6,
+  $port                = $::znc::params::zc_port
+) inherits ::znc::params {
   include stdlib
 
   ### Begin Flow Logic ###
   anchor { 'znc::begin': }
-  -> class { 'znc::package': }
-  -> class { 'znc::config': 
-       auth_type           => $auth_type,
-       ssl                 => $ssl,
-       ssl_source          => $ssl_source,
-       organizationName    => $organizationName,
-       localityName        => $localityName,
-       stateOrProvinceName => $stateOrProvinceName,
-       countryName         => $countryName,
-       emailAddress        => $emailAddress,
-       commonName          => $commonName,
-       port                => $port,
-     }
-  ~> class { 'znc::service': }
+  -> class { '::znc::package': }
+  -> class { '::znc::config':
+      auth_type           => $auth_type,
+      ssl                 => $ssl,
+      ssl_source          => $ssl_source,
+      organizationName    => $organizationName,
+      localityName        => $localityName,
+      stateOrProvinceName => $stateOrProvinceName,
+      countryName         => $countryName,
+      emailAddress        => $emailAddress,
+      commonName          => $commonName,
+      global_modules      => $global_modules,
+      motd                => $motd,
+      ipv6                => $ipv6,
+      port                => $port,
+    }
+  ~> class { '::znc::service': }
   -> anchor { 'znc::end': }
 }
