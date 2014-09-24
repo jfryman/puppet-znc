@@ -73,8 +73,6 @@ class znc::config (
     ensure  => directory,
     purge   => true,
     recurse => true,
-    # if we have no modules for users, this solution doesn't work
-    #notify  => Exec['remove-unmanaged-users'],
   }
 
   file { "${::znc::params::zc_config_dir}/configs/znc.conf.header":
@@ -96,14 +94,6 @@ class znc::config (
   }
 
   file { "${::znc::params::zc_config_dir}/bin": ensure => directory, }
-
-  file { "${::znc::params::zc_config_dir}/bin/clean_users":
-    ensure  => file,
-    owner   => $::znc::params::zc_uid,
-    group   => $::znc::params::zc_gid,
-    mode    => '0754',
-    content => template('znc/bin/clean_znc_users.erb'),
-  }
 
   # Bootstrap SSL
   if $ssl == true and !$ssl_source {
@@ -146,9 +136,4 @@ class znc::config (
     require => File["${::znc::params::zc_config_dir}/configs/znc.conf.header"],
   }
 
-  exec { 'remove-unmanaged-users':
-    command     => "${::znc::params::zc_config_dir}/bin/clean_users",
-    refreshonly => true,
-    require     => File["${::znc::params::zc_config_dir}/bin/clean_users"],
-  }
 }

@@ -58,6 +58,11 @@ define znc::user (
   }
 
   if $ensure == 'absent' {
+    file { "${::znc::params::zc_config_dir}/users/${name}":
+      ensure  => absent,
+      force   => true,
+    }
+
     file { "${::znc::params::zc_config_dir}/configs/puppet_users/${name}":
       ensure  => absent,
       before  => Exec["remove-znc-user-${name}"],
