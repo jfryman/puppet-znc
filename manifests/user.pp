@@ -21,7 +21,7 @@
 # This class file is not called directly
 define znc::user (
   $ensure          = 'present',
-  $realname        = '',
+  $realname        = undef,
   $admin           = false,
   $buffer          = 500,
   $keepbuffer      = true,
@@ -30,8 +30,7 @@ define znc::user (
   $ssl             = false,
   $quitmsg         = 'quit',
   $pass            = '',
-  $default_channel = '#persTest',
-  $channels        = ['#persTest1', '#persTest2'],) {
+  $channels        = undef,) {
   include znc::params
 
   File {

@@ -16,7 +16,9 @@
         Nick            = <%= @name %>
         PrependTimestamp = true
         QuitMsg         = Bye
+        <% if @realname %>
         RealName        = <%= @realname %>
+        <% end %>
         TimestampFormat = [%H:%M:%S]
 
         <Network freenode>
@@ -25,13 +27,11 @@
                 IRCConnectEnabled = true
                 Server = <%= @server %> <% if @ssl == 'true' -%>+<% end -%><%= @port %>
 
-                <%- if @default_channel -%>
-                <Chan <%= @default_channel %>>
-                </Chan>
-                <%- end -%>
+                <%- if @channels -%>
                 <% @channels.each do |channel| %>
                 <Chan <%= channel %>>
                 </Chan>
+                <%- end -%>
                 <%- end -%>
         </Network>
 
