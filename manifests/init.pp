@@ -36,7 +36,11 @@
 #    emailAddress        => 'james@frymanandassociates.net',
 #    commonName          => 'irc.frymanandassociates.net',
 #    motd                => 'Message of the server'
+#    global_modules      => ['module_name1','module_name2']
 #  }
+#  NOTE: In case of global_modules, please be sure, that the list
+#   of provided modules are available for global scope [http://wiki.znc.in/Modules]
+
 class znc(
   $auth_type           = $::znc::params::zc_auth_type,
   $ssl_source          = undef,
@@ -48,6 +52,7 @@ class znc(
   $emailAddress        = undef,
   $commonName          = undef,
   $motd                = undef,
+  $global_modules      = undef,
   $ipv6                = $::znc::params::zc_ipv6,
   $port                = $::znc::params::zc_port
 ) inherits ::znc::params {
@@ -66,6 +71,7 @@ class znc(
       countryName         => $countryName,
       emailAddress        => $emailAddress,
       commonName          => $commonName,
+      global_modules      => $global_modules,
       motd                => $motd,
       ipv6                => $ipv6,
       port                => $port,

@@ -38,6 +38,7 @@ class znc::config (
   $countryName         = undef,
   $emailAddress        = undef,
   $commonName          = undef,
+  $global_modules      = undef,
   $motd                = undef,
   $ipv6                = undef,
   $port                = undef,) {

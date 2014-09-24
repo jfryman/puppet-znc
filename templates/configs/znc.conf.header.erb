@@ -10,7 +10,11 @@
 
 AnonIPLimit = 10
 ConnectDelay = 5
-LoadModule = webadmin
+<%- if @global_modules -%>
+<%- @global_modules.each do |global_module| -%>
+LoadModule = <%= global_module %>
+<%- end -%>
+<%- end -%>
 <% if @auth_type == 'sasl' -%>
 LoadModule = saslauth saslauthd
 <% end -%>
