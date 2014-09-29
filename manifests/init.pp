@@ -54,7 +54,12 @@ class znc(
   $motd                = undef,
   $global_modules      = undef,
   $ipv6                = $::znc::params::zc_ipv6,
-  $port                = $::znc::params::zc_port
+  $port                = $::znc::params::zc_port,
+
+  $znc_admin_user      = $::znc::params::znc_admin_user,
+  $znc_admin_pass      = $::znc::params::znc_admin_pass,
+  $znc_admin_channels  = $::znc::params::znc_admin_channels
+
 ) inherits ::znc::params {
   include stdlib
 
@@ -76,6 +81,13 @@ class znc(
       ipv6                => $ipv6,
       port                => $port,
     }
+      # we need to define at least one user in order to start service
+  -> ::znc::user { $znc_admin_user :
+    realname  => 'Default Admin User',
+    admin     => true,
+    pass      => $znc_admin_pass,
+    channels  => $znc_admin_channels,
+  }
   ~> class { '::znc::service': }
   -> anchor { 'znc::end': }
 }

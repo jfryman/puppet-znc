@@ -31,6 +31,9 @@ define znc::user (
   $quitmsg         = 'quit',
   $pass            = '',
   $channels        = undef,) {
+  if ! defined(Class['znc']) {
+    fail('You must include znc base class before using any user defined resources')
+  }
   include znc::params
 
   File {
@@ -51,13 +54,14 @@ define znc::user (
 
     exec { "add-znc-user-${name}":
       command => "cat ${::znc::params::zc_config_dir}/configs/puppet_users/${name} >> ${::znc::params::zc_config_dir}/configs/znc.conf",
-      unless  => "grep \"<User ${name}>\" ${::znc::params::zc_config_dir}/configs/znc.conf",
+      unless  => "grep -F \"<User ${name}>\" ${::znc::params::zc_config_dir}/configs/znc.conf",
       require => Exec['initialize-znc-config'],
       notify  => Exec['znc-reload'],
     }
   }
 
   if $ensure == 'absent' {
+
     file { "${::znc::params::zc_config_dir}/users/${name}":
       ensure  => absent,
       force   => true,
@@ -70,7 +74,7 @@ define znc::user (
 
     exec { "remove-znc-user-${name}":
       command => "sed -i \"/<User ${name}>/,/<\\/User>/ d\" ${::znc::params::zc_config_dir}/configs/znc.conf",
-      onlyif  => "grep -c \"<User ${name}>\" ${::znc::params::zc_config_dir}/configs/znc.conf",
+      onlyif  => "grep -Fc \"<User ${name}>\" ${::znc::params::zc_config_dir}/configs/znc.conf",
       notify  => Exec['znc-reload'],
     }
   }

@@ -34,6 +34,7 @@ class znc::params {
     }
   }
 
+# server definition
   $zc_user       = 'znc'
   $zc_group      = 'znc'
   $zc_uid        = '400'
@@ -43,4 +44,8 @@ class znc::params {
   $zc_ssl        = true
   $zc_port       = '7777'
   $zc_ipv6       = true
+# default admin user definition
+  $znc_admin_user     = 'adminZ'
+  $znc_admin_pass     = 's0meRnD!'
+  $znc_admin_channels = ['#persTest']
 }
