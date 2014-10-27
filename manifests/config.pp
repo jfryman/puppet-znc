@@ -93,8 +93,6 @@ class znc::config (
     content => template("znc/etc/init.d/znc.${::znc::params::zc_suffix}.erb"),
   }
 
-  file { "${::znc::params::zc_config_dir}/bin": ensure => directory, }
-
   # Bootstrap SSL
   if $ssl == true and !$ssl_source {
     file { "${::znc::params::zc_config_dir}/ssl":
@@ -102,11 +100,16 @@ class znc::config (
       mode   => '0600',
     }
 
+    file { "${::znc::params::zc_config_dir}/bin": ensure => directory, }
+
     file { "${::znc::params::zc_config_dir}/bin/generate_znc_ssl":
       ensure  => file,
       mode    => '0755',
       content => template('znc/bin/generate_znc_ssl.erb'),
-      require => File["${::znc::params::zc_config_dir}/ssl"],
+      require => [
+        File["${::znc::params::zc_config_dir}/ssl"],
+        File["${::znc::params::zc_config_dir}/bin"],
+      ],
     }
 
     file { "${::znc::params::zc_config_dir}/znc.pem":
