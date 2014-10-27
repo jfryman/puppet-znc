@@ -52,12 +52,12 @@ class znc::config (
     path => '/bin:/sbin:/usr/bin:/usr/sbin' }
 
   user { $::znc::params::zc_user:
-    ensure     => present,
-    uid        => $::znc::params::zc_uid,
-    gid        => $::znc::params::zc_gid,
-    shell      => '/usr/sbin/nologin',
-    comment    => 'ZNC Service Account',
-    system     => true,
+    ensure  => present,
+    uid     => $::znc::params::zc_uid,
+    gid     => $::znc::params::zc_gid,
+    shell   => '/usr/sbin/nologin',
+    comment => 'ZNC Service Account',
+    system  => true,
   }
 
   group { $::znc::params::zc_group:
@@ -123,9 +123,9 @@ class znc::config (
 
   if $ssl_source {
     file { "${::znc::params::zc_config_dir}/znc.pem":
-      ensure => file,
-      mode   => '0600',
-      source => $ssl_source,
+      ensure  => file,
+      mode    => '0600',
+      content => $ssl_source,
     }
   }
 

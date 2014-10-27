@@ -83,10 +83,10 @@ class znc(
     }
       # we need to define at least one user in order to start service
   -> ::znc::user { $znc_admin_user :
-    realname  => 'Default Admin User',
-    admin     => true,
-    pass      => $znc_admin_pass,
-    channels  => $znc_admin_channels,
+    realname => 'Default Admin User',
+    admin    => true,
+    pass     => $znc_admin_pass,
+    channels => $znc_admin_channels,
   }
   ~> class { '::znc::service': }
   -> anchor { 'znc::end': }
