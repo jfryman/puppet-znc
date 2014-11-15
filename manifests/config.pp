@@ -67,17 +67,22 @@ class znc::config (
 
   file { $::znc::params::zc_config_dir: ensure => directory, }
 
-  file { "${::znc::params::zc_config_dir}/configs": ensure => directory, }
+  file { "${::znc::params::zc_config_dir}/configs":
+    ensure  => directory,
+    require => File[$::znc::params::zc_config_dir],
+  }
 
   file { "${::znc::params::zc_config_dir}/configs/puppet_users":
     ensure  => directory,
     purge   => true,
     recurse => true,
+    require => File["${::znc::params::zc_config_dir}/configs"],
   }
 
   file { "${::znc::params::zc_config_dir}/configs/znc.conf.header":
     ensure  => file,
     content => template('znc/configs/znc.conf.header.erb'),
+    require => File["${::znc::params::zc_config_dir}/configs"],
   }
 
   file { "${::znc::params::zc_config_dir}/configs/znc.conf":
