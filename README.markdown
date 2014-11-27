@@ -21,6 +21,10 @@ Simple Usage:
     motd                => 'Message of the day'
     global_modules      => ['module_name1','module_name2'],
     ipv6                => false,
+
+    znc_admin_user      => 'adminZ',
+    znc_admin_pass      => 'somep4ss',
+    znc_admin_channels  => ['#some', '#channels']
   }
 
   # create some user
