@@ -64,7 +64,7 @@ class znc(
   include stdlib
   validate_string($znc_admin_user)
   validate_string($znc_admin_pass)
-  validate_string($znc_admin_channels)
+  validate_array($znc_admin_channels)
 
   ### Begin Flow Logic ###
   anchor { 'znc::begin': }
