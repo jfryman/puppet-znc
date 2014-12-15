@@ -58,13 +58,16 @@ class znc(
 
   $znc_admin_user      = undef,
   $znc_admin_pass      = undef,
-  $znc_admin_channels  = undef,
 
 ) inherits ::znc::params {
   include stdlib
+
+  if !$znc_admin_user or !$znc_admin_pass{
+      fail('You must define username/password for admin user')
+  }
+
   validate_string($znc_admin_user)
   validate_string($znc_admin_pass)
-  validate_array($znc_admin_channels)
 
   ### Begin Flow Logic ###
   anchor { 'znc::begin': }
@@ -89,7 +92,6 @@ class znc(
     realname => 'Default Admin User',
     admin    => true,
     pass     => $znc_admin_pass,
-    channels => $znc_admin_channels,
   }
   ~> class { '::znc::service': }
   -> anchor { 'znc::end': }

@@ -21,6 +21,8 @@
         <% end %>
         TimestampFormat = [%H:%M:%S]
 
+
+        <% if ! @admin %>
         <Network freenode>
                 FloodBurst = 4
                 FloodRate = 1.00
@@ -34,6 +36,7 @@
                 <%- end -%>
                 <%- end -%>
         </Network>
+        <% end %>
 
         <Pass password>
                 Hash = <%= @pass %>
