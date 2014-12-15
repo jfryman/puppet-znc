@@ -9,7 +9,7 @@
 # Parameters:
 #   $auth_type: (plain|sasl). Will determine to use local auth or SASL auth.
 #   $ssl: (true|false). Will autogen a SSL certificate.
-#   $ssl_source: puppet:///path/to/server.pem
+#   $ssl_source: ssl certificate content
 #   $port: port to run ZNC on.
 #   $organizationName: Org Name for SSL Self Signed Cert
 #   $localityName: City for SSL Self Signed Cert
