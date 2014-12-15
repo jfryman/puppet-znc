@@ -56,12 +56,15 @@ class znc(
   $ipv6                = $::znc::params::zc_ipv6,
   $port                = $::znc::params::zc_port,
 
-  $znc_admin_user      = $::znc::params::znc_admin_user,
-  $znc_admin_pass      = $::znc::params::znc_admin_pass,
-  $znc_admin_channels  = $::znc::params::znc_admin_channels
+  $znc_admin_user      = undef,
+  $znc_admin_pass      = undef,
+  $znc_admin_channels  = undef,
 
 ) inherits ::znc::params {
   include stdlib
+  validate_string($znc_admin_user)
+  validate_string($znc_admin_pass)
+  validate_array($znc_admin_channels)
 
   ### Begin Flow Logic ###
   anchor { 'znc::begin': }
