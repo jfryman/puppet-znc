@@ -15,10 +15,10 @@
 # This class file is not called directly
 class znc::service {
   service { 'znc':
-    ensure      => 'running',
-    enable      => true,
-    hasstatus   => true,
-    hasrestart  => true,
+    ensure     => 'running',
+    enable     => true,
+    hasstatus  => true,
+    hasrestart => true,
   }
 
   exec { 'znc-reload':

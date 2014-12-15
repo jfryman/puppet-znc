@@ -52,12 +52,12 @@ class znc::config (
     path => '/bin:/sbin:/usr/bin:/usr/sbin' }
 
   user { $::znc::params::zc_user:
-    ensure     => present,
-    uid        => $::znc::params::zc_uid,
-    gid        => $::znc::params::zc_gid,
-    shell      => '/usr/sbin/nologin',
-    comment    => 'ZNC Service Account',
-    system     => true,
+    ensure  => present,
+    uid     => $::znc::params::zc_uid,
+    gid     => $::znc::params::zc_gid,
+    shell   => '/usr/sbin/nologin',
+    comment => 'ZNC Service Account',
+    system  => true,
   }
 
   group { $::znc::params::zc_group:
@@ -67,17 +67,22 @@ class znc::config (
 
   file { $::znc::params::zc_config_dir: ensure => directory, }
 
-  file { "${::znc::params::zc_config_dir}/configs": ensure => directory, }
+  file { "${::znc::params::zc_config_dir}/configs":
+    ensure  => directory,
+    require => File[$::znc::params::zc_config_dir],
+  }
 
   file { "${::znc::params::zc_config_dir}/configs/puppet_users":
     ensure  => directory,
     purge   => true,
     recurse => true,
+    require => File["${::znc::params::zc_config_dir}/configs"],
   }
 
   file { "${::znc::params::zc_config_dir}/configs/znc.conf.header":
     ensure  => file,
     content => template('znc/configs/znc.conf.header.erb'),
+    require => File["${::znc::params::zc_config_dir}/configs"],
   }
 
   file { "${::znc::params::zc_config_dir}/configs/znc.conf":
@@ -93,8 +98,6 @@ class znc::config (
     content => template("znc/etc/init.d/znc.${::znc::params::zc_suffix}.erb"),
   }
 
-  file { "${::znc::params::zc_config_dir}/bin": ensure => directory, }
-
   # Bootstrap SSL
   if $ssl == true and !$ssl_source {
     file { "${::znc::params::zc_config_dir}/ssl":
@@ -102,11 +105,16 @@ class znc::config (
       mode   => '0600',
     }
 
+    file { "${::znc::params::zc_config_dir}/bin": ensure => directory, }
+
     file { "${::znc::params::zc_config_dir}/bin/generate_znc_ssl":
       ensure  => file,
       mode    => '0755',
       content => template('znc/bin/generate_znc_ssl.erb'),
-      require => File["${::znc::params::zc_config_dir}/ssl"],
+      require => [
+        File["${::znc::params::zc_config_dir}/ssl"],
+        File["${::znc::params::zc_config_dir}/bin"],
+      ],
     }
 
     file { "${::znc::params::zc_config_dir}/znc.pem":
@@ -123,9 +131,9 @@ class znc::config (
 
   if $ssl_source {
     file { "${::znc::params::zc_config_dir}/znc.pem":
-      ensure => file,
-      mode   => '0600',
-      source => $ssl_source,
+      ensure  => file,
+      mode    => '0600',
+      content => $ssl_source,
     }
   }
 
