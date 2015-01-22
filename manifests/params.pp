@@ -23,7 +23,7 @@ class znc::params {
   case $::operatingsystem {
     redhat,fedora,centos: {
       $zc_suffix = 'redhat'
-      $zc_packages = ['znc', 'znc-extra']
+      $zc_packages = ['znc', 'znc-modtcl', 'znc-modperl']
     }
     ubuntu, debian: {
       $zc_suffix = 'debian'
