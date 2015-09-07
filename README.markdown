@@ -42,3 +42,4 @@ Simple Usage:
 Puppet Labs Standard Library
 - http://github.com/puppetlabs/puppetlabs-stdlib
 - znc (1.4) (new version can be used from https://launchpad.net/~teward/+archive/ubuntu/znc)
+- if running on OS using systemd, you'll also need [puppet-systemd](http://github.com/camptocamp/puppet-systemd)
