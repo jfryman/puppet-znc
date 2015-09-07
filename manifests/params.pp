@@ -24,10 +24,26 @@ class znc::params {
     redhat,fedora,centos: {
       $zc_suffix = 'redhat'
       $zc_packages = ['znc', 'znc-modtcl', 'znc-modperl']
+      case $::operatingsystemmajrelease {
+        7: {
+          $systemd = true
+        }
+        default: {
+          $systemd = false
+        }
+      }
     }
     ubuntu, debian: {
       $zc_suffix = 'debian'
       $zc_packages = [ 'znc', 'znc-tcl', 'znc-perl' ]
+      case $::operatingsystemmajrelease {
+        8: {
+          $systemd = true
+        }
+        default: {
+          $systemd = true
+        }
+      }
     }
     default: {
       fail("Module ${module_name} is not supported on ${::operatingsystem}")

@@ -55,6 +55,7 @@ class znc(
   $global_modules      = undef,
   $ipv6                = $::znc::params::zc_ipv6,
   $port                = $::znc::params::zc_port,
+  $systemd             = $::znc::params::systemd,
 
   $znc_admin_user      = undef,
   $znc_admin_pass      = undef,
@@ -86,6 +87,7 @@ class znc(
       motd                => $motd,
       ipv6                => $ipv6,
       port                => $port,
+      systemd             => $systemd,
     }
       # we need to define at least one user in order to start service
   -> ::znc::user { $znc_admin_user :
