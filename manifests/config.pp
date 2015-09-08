@@ -41,6 +41,7 @@ class znc::config (
   $global_modules      = undef,
   $motd                = undef,
   $ipv6                = undef,
+  $systemd             = udnef,
   $port                = undef,) {
   File {
     owner => $::znc::params::zc_user,
@@ -96,6 +97,16 @@ class znc::config (
     group   => 'root',
     mode    => '0755',
     content => template("znc/etc/init.d/znc.${::znc::params::zc_suffix}.erb"),
+  }
+  if $systemd {
+    include ::systemd
+    file { '/lib/systemd/system/znc.service':
+      ensure  => file,
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0755',
+      content => template('znc/systemd/znc.service.erb'),
+    } ~> Exec['systemctl-daemon-reload']
   }
 
   # Bootstrap SSL

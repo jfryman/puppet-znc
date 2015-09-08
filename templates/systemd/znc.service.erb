@@ -1,0 +1,12 @@
+[Unit]
+Description=ZNC - an advanced IRC bouncer
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/znc -d /etc/znc
+User=<%= scope.lookupvar('znc::params::zc_user') %>
+Type=forking
+
+[Install]
+WantedBy=multi-user.target
+
