@@ -30,7 +30,8 @@ define znc::user (
   $ssl             = false,
   $quitmsg         = 'quit',
   $pass            = '',
-  $channels        = undef,) {
+  $channels        = undef,
+  $network         = undef,) {
   if ! defined(Class['znc']) {
     fail('You must include znc base class before using any user defined resources')
   }
