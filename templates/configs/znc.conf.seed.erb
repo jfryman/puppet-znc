@@ -4,7 +4,7 @@
         AltNick         = <%= @name %>_
         AppendTimestamp = false
         AutoClearChanBuffer = true
-        Buffer          = 50
+        Buffer          = <%= @buffer %>
         ChanModes       = +stn
         DenyLoadMod     = false
         DenySetBindHost = false
@@ -15,7 +15,7 @@
         MultiClients    = true
         Nick            = <%= @name %>
         PrependTimestamp = true
-        QuitMsg         = Bye
+        QuitMsg         = <%= @quitmsg %>
         <% if @realname %>
         RealName        = <%= @realname %>
         <% end %>
