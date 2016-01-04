@@ -10,8 +10,13 @@
         DenySetBindHost = false
         Ident           = <%= @name %>
         JoinTries       = 10
+        <% if @loadmodules %>
+        <% @loadmodules.each do |loadmodule| %>
+        LoadModule = <%= loadmodule %>
+        <% end %>
+        <% end %>
         MaxJoins        = 0
-        MaxNetworks     = 1
+        MaxNetworks     = <%= @maxnetworks %>
         MultiClients    = true
         Nick            = <%= @name %>
         PrependTimestamp = true
