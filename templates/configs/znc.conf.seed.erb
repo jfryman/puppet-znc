@@ -23,7 +23,11 @@
 
 
         <% if ! @admin %>
+        <% if @network %>
+        <Network <%= @network %>>
+        <% else %>
         <Network freenode>
+        <% end %>
                 FloodBurst = 4
                 FloodRate = 1.00
                 IRCConnectEnabled = true
