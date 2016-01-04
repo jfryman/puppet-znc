@@ -31,7 +31,9 @@ define znc::user (
   $quitmsg         = 'quit',
   $pass            = '',
   $channels        = undef,
-  $network         = undef,) {
+  $network         = undef,
+  $maxnetworks     = 1,
+  $loadmodules     = undef,) {
   if ! defined(Class['znc']) {
     fail('You must include znc base class before using any user defined resources')
   }
