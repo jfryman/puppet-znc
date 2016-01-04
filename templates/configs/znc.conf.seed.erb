@@ -27,7 +27,7 @@
                 FloodBurst = 4
                 FloodRate = 1.00
                 IRCConnectEnabled = true
-                Server = <%= @server %> <% if @ssl == 'true' -%>+<% end -%><%= @port %>
+                Server = <%= @server %> <% if @ssl %>+<% end %><%= @port %>
 
                 <%- if @channels -%>
                 <% @channels.each do |channel| %>
