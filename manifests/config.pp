@@ -52,11 +52,20 @@ class znc::config (
   Exec {
     path => '/bin:/sbin:/usr/bin:/usr/sbin' }
 
+  case $::osfamily {
+    'debian': {
+      $nologin_shell = '/usr/sbin/nologin'
+    }
+    'redhat': {
+      $nologin_shell = '/sbin/nologin'
+    }
+  }
+
   user { $::znc::params::zc_user:
     ensure  => present,
     uid     => $::znc::params::zc_uid,
     gid     => $::znc::params::zc_gid,
-    shell   => '/usr/sbin/nologin',
+    shell   => $nologin_shell,
     comment => 'ZNC Service Account',
     system  => true,
   }
